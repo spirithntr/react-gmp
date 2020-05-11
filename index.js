@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./src/App";
-import CreatedHeader from "./src/createElement";
-import Component from "./src/component";
-import PureComponent from "./src/pureComponent";
+import { App } from "./src/App";
+import { CreatedElement } from "./src/createElement";
+import { Welcome } from "./src/component";
+import { PureWelcome } from "./src/pureComponent";
 
 ReactDOM.render(<App />, document.getElementById("root"));
-ReactDOM.render(CreatedHeader, document.getElementById("root-1"));
-ReactDOM.render(<Component special={"my props"}/>, document.getElementById("root-2"));
-ReactDOM.render(<PureComponent />, document.getElementById("root-3"));
+ReactDOM.render(CreatedElement, document.getElementById("root-1"));
+ReactDOM.render(<Welcome special={"my props"}/>, document.getElementById("root-2"));
+ReactDOM.render(<PureWelcome />, document.getElementById("root-3"));
 

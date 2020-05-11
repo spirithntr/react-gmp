@@ -10,4 +10,4 @@ class Welcome extends React.Component<WelcomeProps> {
   }
 }
 
-export default Welcome;
+export { Welcome };

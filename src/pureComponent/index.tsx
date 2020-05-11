@@ -6,4 +6,4 @@ class PureWelcome extends React.PureComponent {
   }
 }
 
-export default PureWelcome;
+export { PureWelcome };
