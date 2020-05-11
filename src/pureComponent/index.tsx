@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class PureWelcome extends React.PureComponent {
   render() {
