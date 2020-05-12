@@ -29,7 +29,7 @@
       "**/__tests__/*.(ts|tsx|js)"
     ],
     "moduleNameMapper": {
-      "\\.(s?css|less)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(s?css)$": "<rootDir>/__mocks__/styleMock.js"
     }
   },
   "dependencies": {
