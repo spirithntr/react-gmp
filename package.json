@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest --watch",
     "server": "node server",
-    "start": "webpack-dev-server --hot --open --env.development",
-    "build": "webpack --config webpack.config.js --env.production",
+    "start": "webpack-dev-server --hot --open --mode=development",
+    "build": "webpack --config webpack.config.js --mode=production",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "author": "",
