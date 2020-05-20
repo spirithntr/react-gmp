@@ -1,0 +1,41 @@
+.movie {
+  width: 320px;
+  margin: 20px;
+  color: #ffffff;
+  font-family: Montserrat;
+
+  .info_first-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3px;
+  }
+
+  img {
+    width: 320px;
+    height: 450px;
+    background-size: cover;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 22px;
+    opacity: 70%;
+  }
+
+  .year {
+    font-size: 13px;
+    opacity: 70%;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 4px 18px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .genres {
+    font-size: 14px;
+    line-height: 18px;
+    opacity: 50%;
+  }
+}
