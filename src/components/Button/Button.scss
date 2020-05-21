@@ -1,0 +1,19 @@
+.button {
+  background-color: #f65261;
+  border-radius: 5px;
+  border: 0;
+  color: #fefefe;
+  cursor: pointer;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 400;
+  height: 51px;
+  margin: 10px 0 10px 10px;
+  padding: 10px;
+  text-transform: uppercase;
+  transition: 0.2s;
+  width: 250px;
+}
+button:hover {
+  background-color: lighten($color: #e54b4b, $amount: 5);
+}

@@ -9,7 +9,7 @@ const movies = moviesMock.map((movie) => (
     key={movie.id}
     poster={movie.poster_path}
     title={movie.title}
-    year={movie.release_date}
+    year={movie.release_date.split('-').shift()}
     genres={movie.genres}
   />
 ));

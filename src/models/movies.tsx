@@ -12,3 +12,13 @@ export interface Movie {
   genres: string[];
   runtime: number;
 }
+
+export enum SearchTabs {
+  title = 'TITLE',
+  genre = 'GENRE',
+}
+
+export enum SortTabs {
+  release = 'RELEASE DATE',
+  rating = 'RATING',
+}

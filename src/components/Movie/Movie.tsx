@@ -18,7 +18,7 @@ export const Movie: React.FunctionComponent<Props> = (props) => {
           <div className="title">{props.title}</div>
           <div className="year">{props.year}</div>
         </div>
-        <div className="genres">{props.genres}</div>
+        <div className="genres">{props.genres.join(', ')}</div>
       </div>
     </div>
   );

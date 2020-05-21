@@ -2,7 +2,6 @@ import React from 'react';
 import { Logo } from '../Logo/Logo';
 import { TopPanel } from '../TopPanel/TopPanel';
 import { Poster } from '../Poster/Poster';
-import { data as moviesMock } from '../../../__mocks__/movies.json';
 import { Movie } from '../../models/movies';
 import { SearchButton } from '../SearchButton/SearchButton';
 import './InfoPanel.scss';
