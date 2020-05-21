@@ -8,6 +8,7 @@ import './InfoPanel.scss';
 
 type Props = {
   movie: Movie;
+  onReset(): void;
 };
 
 export const InfoPanel: React.FunctionComponent<Props> = (props) => (
@@ -15,7 +16,7 @@ export const InfoPanel: React.FunctionComponent<Props> = (props) => (
     <div className="infopanel">
       <div className="logo-container">
         <Logo />
-        <SearchButton></SearchButton>
+        <SearchButton onReset={props.onReset}></SearchButton>
       </div>
       <div className="infopanel__container">
         <Poster poster={props.movie.poster_path} />

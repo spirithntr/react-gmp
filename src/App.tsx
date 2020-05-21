@@ -31,17 +31,36 @@ export class App extends React.Component<any, State> {
       movies: moviesMock,
       selectedMovie: null
     }
+
+    this.handleMovieSelect = this.handleMovieSelect.bind(this);
+    this.handleMovieReset = this.handleMovieReset.bind(this);
+
   }
   render() {
     return (
       <ErrorBoundary>
-        <SearchPanel></SearchPanel>
-        <SearchSplit />
-        <InfoPanel movie={movie} />
-        <InfoSplit genre={movie.genres[0]} />
-        <MovieList />
+        {this.state.selectedMovie
+          ? <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
+          : <SearchPanel></SearchPanel>
+        }
+        {this.state.selectedMovie
+          ? <InfoSplit genre={this.state.selectedMovie.genres[0]} />
+          : <SearchSplit />
+        }
+        <MovieList movies={this.state.movies} onSelect={this.handleMovieSelect} />
         <Footer />
       </ErrorBoundary>
     )
+  }
+
+  public handleMovieSelect(id: number) {
+    const selectedMovie = this.state.movies.find((movie) => movie.id === id);
+    if (selectedMovie) {
+      this.setState({ selectedMovie });
+    }
+  }
+
+  public handleMovieReset() {
+    this.setState({ selectedMovie: null });
   }
 }
