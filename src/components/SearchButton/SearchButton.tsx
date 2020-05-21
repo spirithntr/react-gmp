@@ -5,7 +5,7 @@ type Props = {
   onReset(): void;
 }
 
-export const SearchButton = (props: any) => {
+export const SearchButton = (props: Props) => {
   const handleClick = (e: React.SyntheticEvent) => {
     props.onReset();
   }
