@@ -13,8 +13,10 @@ export const SearchPanel: React.FunctionComponent = (props) => (
         <Logo />
       </div>
       <h1>FIND YOUR MOVIE</h1>
-      <Input></Input>
-      <Button content="search"></Button>
+      <div className="search-panel__row">
+        <Input></Input>
+        <Button content="search"></Button>
+      </div>
       <Toggle criteria="search" left="title" right="genre"></Toggle>
     </div>
   </TopPanel>
