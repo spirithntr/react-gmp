@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.scss';
+import './Movie.scss';
 
 type Props = {
   poster: string;
