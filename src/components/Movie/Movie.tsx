@@ -10,7 +10,14 @@ type Props = {
 
 export const Movie: React.FunctionComponent<Props> = (props) => (
   <div className="movie">
-    <img src={props.poster} />
+    <img
+      src={props.poster}
+      onError={(e) => {
+        const img = e.target as HTMLImageElement;
+        img.src = 'src/assets/grey_x.png';
+        img.onerror = null;
+      }}
+    />
     <div className="info">
       <div className="info_first-row">
         <div className="title">{props.title}</div>
