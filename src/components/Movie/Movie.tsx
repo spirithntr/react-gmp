@@ -14,7 +14,6 @@ type Props = {
 export const Movie: React.FunctionComponent<Props> = (props) => {
   const handleClick = (e: React.SyntheticEvent) => {
     props.onSelect(props.id);
-    console.log(props.id);
   };
 
   return (

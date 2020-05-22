@@ -34,10 +34,12 @@ export class App extends React.Component<any, State> {
     this.handleMovieReset = this.handleMovieReset.bind(this);
     this.handleToggleSort = this.handleToggleSort.bind(this);
     this.handleToggleSearch = this.handleToggleSearch.bind(this);
+    this.selectSortingAlgorithm = this.selectSortingAlgorithm.bind(this);
 
 
   }
   render() {
+    const sortedMovies = ([].concat(this.state.movies) as Movie[]).sort(this.selectSortingAlgorithm)
     return (
       <ErrorBoundary>
         {this.state.selectedMovie
@@ -48,7 +50,7 @@ export class App extends React.Component<any, State> {
           ? <InfoSplit genre={this.state.selectedMovie.genres[0]} />
           : <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
         }
-        <MovieList movies={this.state.movies} onSelect={this.handleMovieSelect} />
+        <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
         <Footer />
       </ErrorBoundary>
     )
@@ -71,5 +73,16 @@ export class App extends React.Component<any, State> {
 
   public handleToggleSearch(searchTab: SearchTabs) {
     this.setState({ searchTab });
+  }
+
+  private sortByDate(first: Movie, second: Movie) {
+    return first.release_date < second.release_date ? 1 : -1;
+  }
+
+  private sortByRating(first: Movie, second: Movie) {
+    return first.vote_average < second.vote_average ? 1 : -1;
+  }
+  private selectSortingAlgorithm(a: Movie, b: Movie) {
+    return this.state.sortTab === SortTabs.rating ? this.sortByRating(a, b) : this.sortByDate(a, b);
   }
 }

@@ -13,7 +13,7 @@ type Props = {
 
 
 export const MovieList: React.FunctionComponent<Props> = (props) => {
-  const makeList = (movies: IMovie[]) => moviesMock.map((movie) => (
+  const makeList = (movies: IMovie[]) => props.movies.map((movie) => (
     <Movie
       id={movie.id}
       genres={movie.genres}
