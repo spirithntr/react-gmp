@@ -5,8 +5,14 @@ import { Logo } from '../Logo/Logo';
 import { TopPanel } from '../TopPanel/TopPanel';
 import './SearchPanel.scss';
 import { Toggle } from '../Toggle/Toggle';
+import { SearchTabs } from '../../models/movies';
 
-export const SearchPanel: React.FunctionComponent = (props) => (
+type Props = {
+  searchTab: SearchTabs;
+  onToggle: any;
+}
+
+export const SearchPanel: React.FunctionComponent<Props> = (props) => (
   <TopPanel>
     <div className="search-container">
       <div className="logo-container">
@@ -17,7 +23,7 @@ export const SearchPanel: React.FunctionComponent = (props) => (
         <Input></Input>
         <Button content="search"></Button>
       </div>
-      <Toggle criteria="search" left="title" right="genre"></Toggle>
+      <Toggle onToggle={props.onToggle} active={props.searchTab} criteria="search" left={SearchTabs.title} right={SearchTabs.genre}></Toggle>
     </div>
   </TopPanel>
 );

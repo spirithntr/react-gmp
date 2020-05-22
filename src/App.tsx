@@ -12,8 +12,6 @@ import { data as moviesMock } from '../__mocks__/movies.json';
 import { SearchSplit } from './components/SearchSplit/SearchSplit';
 import { Movie, SearchTabs, SortTabs } from './models/movies';
 
-const movie = moviesMock[7];
-
 type State = {
   selectedMovie: Movie | null;
   movies: Movie[];
@@ -26,14 +24,17 @@ export class App extends React.Component<any, State> {
     super(props);
 
     this.state = {
-      sortTab: SortTabs.rating,
-      searchTab: SearchTabs.genre,
+      sortTab: SortTabs.release,
+      searchTab: SearchTabs.title,
       movies: moviesMock,
       selectedMovie: null
     }
 
     this.handleMovieSelect = this.handleMovieSelect.bind(this);
     this.handleMovieReset = this.handleMovieReset.bind(this);
+    this.handleToggleSort = this.handleToggleSort.bind(this);
+    this.handleToggleSearch = this.handleToggleSearch.bind(this);
+
 
   }
   render() {
@@ -41,11 +42,11 @@ export class App extends React.Component<any, State> {
       <ErrorBoundary>
         {this.state.selectedMovie
           ? <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
-          : <SearchPanel></SearchPanel>
+          : <SearchPanel searchTab={this.state.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
         }
         {this.state.selectedMovie
           ? <InfoSplit genre={this.state.selectedMovie.genres[0]} />
-          : <SearchSplit />
+          : <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
         }
         <MovieList movies={this.state.movies} onSelect={this.handleMovieSelect} />
         <Footer />
@@ -62,5 +63,13 @@ export class App extends React.Component<any, State> {
 
   public handleMovieReset() {
     this.setState({ selectedMovie: null });
+  }
+
+  public handleToggleSort(sortTab: SortTabs) {
+    this.setState({ sortTab });
+  }
+
+  public handleToggleSearch(searchTab: SearchTabs) {
+    this.setState({ searchTab });
   }
 }
