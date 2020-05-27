@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cypress": "cypress run",
     "test": "jest --watch",
     "server": "node server",
-    "start": "webpack-dev-server --hot --open --env.development",
-    "build": "webpack --config webpack.config.js --env.production",
+    "start": "webpack-dev-server --hot --open --mode=development",
+    "build": "webpack --config webpack.config.js --mode=production",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "author": "",
@@ -26,11 +27,12 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/test-preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.(ts|tsx|js)"
+      "**/*.spec.(ts|tsx|js)"
     ],
     "moduleNameMapper": {
       "\\.(s?css)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+    },
+    "snapshotResolver": "./snapshotResolver.js"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -48,11 +50,14 @@
     "@types/jest": "^25.2.1",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.1",
     "css-loader": "^3.5.3",
+    "cypress": "^4.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^7.0.0",

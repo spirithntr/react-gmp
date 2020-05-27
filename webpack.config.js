@@ -1,9 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
-const config = {
-  mode: 'none',
+module.exports = {
   entry: './index.js',
   output: {
     filename: 'bundle.[hash].js',
@@ -13,6 +13,9 @@ const config = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'assets', to: 'assets' }],
     }),
   ],
   resolve: {
@@ -40,10 +43,4 @@ const config = {
       },
     ],
   },
-};
-
-module.exports = (env, argv) => {
-  config.devtool = env.development ? 'source-map' : false;
-
-  return config;
 };
