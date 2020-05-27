@@ -1,6 +1,10 @@
 import React from 'react';
 import './Button.scss';
 
-export const Button = (props: any) => {
+type Props = {
+  content: string;
+};
+
+export const Button = (props: Props) => {
   return <button className="button">{props.content}</button>;
 };
