@@ -26,7 +26,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/test-preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.(ts|tsx|js)"
+      "**/*.spec.(ts|tsx|js)"
     ],
     "moduleNameMapper": {
       "\\.(s?css)$": "<rootDir>/__mocks__/styleMock.js"

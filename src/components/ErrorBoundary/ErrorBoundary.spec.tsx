@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { jest } from '@jest/globals';
 import { mount, ReactWrapper } from 'enzyme';
-import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const ChildComp = () => <div>test data</div>;
 let wrapper: ReactWrapper;

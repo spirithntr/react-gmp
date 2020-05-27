@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 
-import { Footer } from '../components/Footer/Footer';
+import { Footer } from './Footer';
 
 describe('Footer', () => {
   it('renders the Logo', () => {

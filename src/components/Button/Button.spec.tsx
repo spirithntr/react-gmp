@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { Button } from '../components/Button/Button';
+import { Button } from './Button';
 
 it('renders the heading', () => {
   const testName = 'someName';
