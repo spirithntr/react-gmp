@@ -30,7 +30,8 @@
     ],
     "moduleNameMapper": {
       "\\.(s?css)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+    },
+    "snapshotResolver": "./snapshotResolver.js"
   },
   "dependencies": {
     "express": "^4.17.1",
