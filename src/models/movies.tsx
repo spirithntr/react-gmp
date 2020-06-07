@@ -22,3 +22,10 @@ export enum SortTabs {
   release = 'RELEASE DATE',
   rating = 'RATING',
 }
+
+export type State = {
+  selectedMovie: Movie | null;
+  movies: Movie[];
+  searchTab: SearchTabs;
+  sortTab: SortTabs;
+};
