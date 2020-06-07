@@ -28,4 +28,12 @@ export type State = {
   movies: Movie[];
   searchTab: SearchTabs;
   sortTab: SortTabs;
+  search: string;
 };
+
+export interface MovieResponse {
+  data: Movie[],
+  limit: number,
+  offset: number,
+  total: number
+}

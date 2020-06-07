@@ -11,12 +11,17 @@ import { InfoSplit } from './components/InfoSplit/InfoSplit';
 import { SearchSplit } from './components/SearchSplit/SearchSplit';
 import { Movie, SearchTabs, SortTabs, State } from './models/movies';
 import { connect } from 'react-redux';
-import { getMoviesAction } from './store/actions/actions';
+import * as Actions from './store/actions/actions';
 import { Store } from 'redux';
 
 type Props = {
   getMovies: () => void;
+  switchSearchTab: (a: SearchTabs) => void;
   store: Store;
+  movies: Movie[],
+  sortTab: SortTabs,
+  selectedMovie: Movie,
+  searchTab: SearchTabs,
 };
 
 export class App extends React.Component<Props, State> {
@@ -24,6 +29,7 @@ export class App extends React.Component<Props, State> {
     super(props);
 
     this.state = {
+      search: '',
       sortTab: SortTabs.release,
       searchTab: SearchTabs.title,
       movies: [],
@@ -42,19 +48,19 @@ export class App extends React.Component<Props, State> {
   }
 
   render() {
-    const sortedMovies = ([].concat((this.props as any).movies) as Movie[]).sort(this.selectSortingAlgorithm);
+    const sortedMovies = this.props.movies.sort(this.selectSortingAlgorithm);
     return (
       <ErrorBoundary>
         {this.state.selectedMovie ? (
           <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
         ) : (
-          <SearchPanel searchTab={this.state.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
-        )}
+            <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
+          )}
         {this.state.selectedMovie ? (
           <InfoSplit genre={this.state.selectedMovie.genres[0]} />
         ) : (
-          <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
-        )}
+            <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
+          )}
         <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
         <Footer />
       </ErrorBoundary>
@@ -70,14 +76,16 @@ export class App extends React.Component<Props, State> {
 
   public handleMovieReset() {
     this.setState({ selectedMovie: null });
+    this.props.getMovies();
   }
 
   public handleToggleSort(sortTab: SortTabs) {
     this.setState({ sortTab });
+    this.props.getMovies();
   }
 
   public handleToggleSearch(searchTab: SearchTabs) {
-    this.setState({ searchTab });
+    this.props.switchSearchTab(searchTab);
   }
 
   private sortByDate(first: Movie, second: Movie) {
@@ -102,7 +110,8 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getMovies: () => dispatch(getMoviesAction()),
+    getMovies: () => dispatch(Actions.getMoviesAction()),
+    switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab))
   };
 };
 
