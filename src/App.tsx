@@ -17,6 +17,9 @@ import { Store } from 'redux';
 type Props = {
   getMovies: () => void;
   switchSearchTab: (a: SearchTabs) => void;
+  switchSortTab: (a: SortTabs) => void;
+  selectMovie: (a: Movie) => void;
+  resetSelectedMovie: () => void;
   store: Store;
   movies: Movie[];
   sortTab: SortTabs;
@@ -48,19 +51,22 @@ export class App extends React.Component<Props, State> {
   }
 
   render() {
-    const sortedMovies = this.props.movies.sort(this.selectSortingAlgorithm);
+    const sortedMovies = this.props.movies;
     return (
       <ErrorBoundary>
-        {this.state.selectedMovie ? (
-          <>
-            <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
-            <InfoSplit genre={this.state.selectedMovie.genres[0]} />
-          </>
+        {this.props.selectedMovie ? (
+          <InfoPanel movie={this.props.selectedMovie} onReset={this.handleMovieReset} />
         ) : (
-          <>
-            <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
-            <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
-          </>
+          <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
+        )}
+        {this.props.selectedMovie ? (
+          <InfoSplit genre={this.props.selectedMovie.genres[0]} />
+        ) : (
+          <SearchSplit
+            moviesCount={this.props.movies.length}
+            sortTab={this.props.sortTab}
+            onToggle={this.handleToggleSort}
+          />
         )}
         <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
         <Footer />
@@ -69,20 +75,18 @@ export class App extends React.Component<Props, State> {
   }
 
   public handleMovieSelect(id: number) {
-    const selectedMovie = ((this.props as any).movies as Movie[]).find((movie) => movie.id === id);
+    const selectedMovie = this.props.movies.find((movie) => movie.id === id);
     if (selectedMovie) {
-      this.setState({ selectedMovie });
+      this.props.selectMovie(selectedMovie);
     }
   }
 
   public handleMovieReset() {
-    this.setState({ selectedMovie: null });
-    this.props.getMovies();
+    this.props.resetSelectedMovie();
   }
 
   public handleToggleSort(sortTab: SortTabs) {
-    this.setState({ sortTab });
-    this.props.getMovies();
+    this.props.switchSortTab(sortTab);
   }
 
   public handleToggleSearch(searchTab: SearchTabs) {
@@ -113,6 +117,9 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getMovies: () => dispatch(Actions.getMoviesAction()),
     switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab)),
+    switchSortTab: (sortTab: SortTabs) => dispatch(Actions.switchSortTabAction(sortTab)),
+    selectMovie: (movie: Movie) => dispatch(Actions.selectMovieAction(movie)),
+    resetSelectedMovie: () => dispatch(Actions.resetSelectedMovieAction()),
   };
 };
 

@@ -6,7 +6,7 @@ const initialState: State = {
   searchTab: SearchTabs.title,
   sortTab: SortTabs.release,
   selectedMovie: null,
-  search: ''
+  search: '',
 };
 
 export const movies = (state: State = initialState, { type, payload }: any) => {
@@ -25,8 +25,27 @@ export const movies = (state: State = initialState, { type, payload }: any) => {
     case ACTIONS.SWITCH_SEARCH_TAB:
       state = {
         ...state,
-        searchTab: payload
-      }
+        searchTab: payload,
+      };
+      break;
+    case ACTIONS.SWITCH_SORT_TAB:
+      state = {
+        ...state,
+        sortTab: payload,
+      };
+      break;
+    case ACTIONS.SELECT_MOVIE:
+      state = {
+        ...state,
+        selectedMovie: payload,
+      };
+      break;
+    case ACTIONS.RESET_SELECTED_MOVIE:
+      state = {
+        ...state,
+        selectedMovie: null,
+      };
+      break;
     default:
       break;
   }
