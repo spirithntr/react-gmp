@@ -18,10 +18,10 @@ type Props = {
   getMovies: () => void;
   switchSearchTab: (a: SearchTabs) => void;
   store: Store;
-  movies: Movie[],
-  sortTab: SortTabs,
-  selectedMovie: Movie,
-  searchTab: SearchTabs,
+  movies: Movie[];
+  sortTab: SortTabs;
+  selectedMovie: Movie;
+  searchTab: SearchTabs;
 };
 
 export class App extends React.Component<Props, State> {
@@ -52,15 +52,16 @@ export class App extends React.Component<Props, State> {
     return (
       <ErrorBoundary>
         {this.state.selectedMovie ? (
-          <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
+          <>
+            <InfoPanel movie={this.state.selectedMovie} onReset={this.handleMovieReset} />
+            <InfoSplit genre={this.state.selectedMovie.genres[0]} />
+          </>
         ) : (
+          <>
             <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
-          )}
-        {this.state.selectedMovie ? (
-          <InfoSplit genre={this.state.selectedMovie.genres[0]} />
-        ) : (
             <SearchSplit sortTab={this.state.sortTab} onToggle={this.handleToggleSort} />
-          )}
+          </>
+        )}
         <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
         <Footer />
       </ErrorBoundary>
@@ -111,7 +112,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getMovies: () => dispatch(Actions.getMoviesAction()),
-    switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab))
+    switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab)),
   };
 };
 
