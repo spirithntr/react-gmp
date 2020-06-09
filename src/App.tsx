@@ -12,20 +12,23 @@ import { SearchSplit } from './components/SearchSplit/SearchSplit';
 import { Movie, SearchTabs, SortTabs, State } from './models/movies';
 import { connect } from 'react-redux';
 import * as Actions from './store/actions/actions';
-import { Store } from 'redux';
 
-type Props = {
-  getMovies: () => void;
-  switchSearchTab: (a: SearchTabs) => void;
-  switchSortTab: (a: SortTabs) => void;
-  selectMovie: (a: Movie) => void;
-  resetSelectedMovie: () => void;
-  store: Store;
+type StateProps = {
   movies: Movie[];
   sortTab: SortTabs;
   selectedMovie: Movie;
   searchTab: SearchTabs;
 };
+
+type DispatchProps = {
+  getMovies: () => void;
+  switchSearchTab: (a: SearchTabs) => void;
+  switchSortTab: (a: SortTabs) => void;
+  selectMovie: (a: Movie) => void;
+  resetSelectedMovie: () => void;
+};
+
+type Props = StateProps & DispatchProps;
 
 export class App extends React.Component<Props, State> {
   constructor(props: any) {
@@ -51,7 +54,6 @@ export class App extends React.Component<Props, State> {
   }
 
   render() {
-    const sortedMovies = this.props.movies;
     return (
       <ErrorBoundary>
         {this.props.selectedMovie ? (
@@ -69,7 +71,7 @@ export class App extends React.Component<Props, State> {
             />
           </>
         )}
-        <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
+        <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
         <Footer />
       </ErrorBoundary>
     );
@@ -107,14 +109,14 @@ export class App extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State): StateProps => ({
   movies: state.movies,
   sortTab: state.sortTab,
   selectedMovie: state.selectedMovie,
   searchTab: state.searchTab,
 });
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any): DispatchProps => {
   return {
     getMovies: () => dispatch(Actions.getMoviesAction()),
     switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab)),
