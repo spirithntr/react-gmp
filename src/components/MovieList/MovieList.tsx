@@ -23,5 +23,9 @@ export const MovieList: React.FunctionComponent<Props> = (props) => {
         onSelect={props.onSelect}
       />
     ));
-  return <div className="movielist">{makeList(props.movies)}</div>;
+  return props.movies?.length ? (
+    <div className="movielist">{makeList(props.movies)}</div>
+  ) : (
+    <div className="emptylist">No films found</div>
+  );
 };

@@ -71,3 +71,9 @@ export const resetSelectedMovieAction = () => {
     dispatch(getMoviesAction());
   };
 };
+
+export const changeSearchInputAction = (input: string) => {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({ type: ACTIONS.CHANGE_SEARCH_INPUT, payload: input });
+  };
+};

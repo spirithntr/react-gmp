@@ -5,7 +5,7 @@ import { Button } from './Button';
 
 it('renders the heading', () => {
   const testName = 'someName';
-  const result = shallow(<Button content={testName} />).containsMatchingElement(
+  const result = shallow(<Button onClick={() => {}} content={testName} />).containsMatchingElement(
     <button className="button">someName</button>
   );
   expect(result).toBeTruthy();

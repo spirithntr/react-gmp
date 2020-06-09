@@ -46,6 +46,11 @@ export const movies = (state: State = initialState, { type, payload }: any) => {
         selectedMovie: null,
       };
       break;
+    case ACTIONS.CHANGE_SEARCH_INPUT:
+      state = {
+        ...state,
+        search: payload,
+      };
     default:
       break;
   }

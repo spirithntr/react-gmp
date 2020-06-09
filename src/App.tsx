@@ -26,6 +26,7 @@ type DispatchProps = {
   switchSortTab: (a: SortTabs) => void;
   selectMovie: (a: Movie) => void;
   resetSelectedMovie: () => void;
+  changeInput: (a: string) => void;
 };
 
 type Props = StateProps & DispatchProps;
@@ -47,6 +48,7 @@ export class App extends React.Component<Props, State> {
     this.handleToggleSort = this.handleToggleSort.bind(this);
     this.handleToggleSearch = this.handleToggleSearch.bind(this);
     this.selectSortingAlgorithm = this.selectSortingAlgorithm.bind(this);
+    this.handleSearchInput = this.handleSearchInput.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +65,13 @@ export class App extends React.Component<Props, State> {
           </>
         ) : (
           <>
-            <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
+            <SearchPanel
+              onKeyPress={this.props.getMovies}
+              onChange={this.handleSearchInput}
+              searchTab={this.props.searchTab}
+              onToggle={this.handleToggleSearch}
+              onClick={this.props.getMovies}
+            ></SearchPanel>
             <SearchSplit
               moviesCount={this.props.movies.length}
               sortTab={this.props.sortTab}
@@ -96,6 +104,10 @@ export class App extends React.Component<Props, State> {
     this.props.switchSearchTab(searchTab);
   }
 
+  public handleSearchInput(input: string) {
+    this.props.changeInput(input);
+  }
+
   private sortByDate(first: Movie, second: Movie) {
     return first.release_date < second.release_date ? 1 : -1;
   }
@@ -123,6 +135,7 @@ const mapDispatchToProps = (dispatch: any): DispatchProps => {
     switchSortTab: (sortTab: SortTabs) => dispatch(Actions.switchSortTabAction(sortTab)),
     selectMovie: (movie: Movie) => dispatch(Actions.selectMovieAction(movie)),
     resetSelectedMovie: () => dispatch(Actions.resetSelectedMovieAction()),
+    changeInput: (input: string) => dispatch(Actions.changeSearchInputAction(input)),
   };
 };
 

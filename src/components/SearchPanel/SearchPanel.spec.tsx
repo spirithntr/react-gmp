@@ -10,7 +10,13 @@ const mockSelectHandler = jest.fn((x) => void 0) as any;
 describe('Search panel', () => {
   it('is just a proxy, nothing should be called', () => {
     const component = mount(
-      <SearchPanel searchTab={SearchTabs.title} onToggle={mockSelectHandler} />
+      <SearchPanel
+        onKeyPress={() => {}}
+        onClick={() => {}}
+        onChange={() => {}}
+        searchTab={SearchTabs.title}
+        onToggle={mockSelectHandler}
+      />
     );
     component.find('button').simulate('click');
     expect(mockSelectHandler).not.toBeCalled();
