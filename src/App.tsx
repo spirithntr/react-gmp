@@ -55,18 +55,19 @@ export class App extends React.Component<Props, State> {
     return (
       <ErrorBoundary>
         {this.props.selectedMovie ? (
-          <InfoPanel movie={this.props.selectedMovie} onReset={this.handleMovieReset} />
+          <>
+            <InfoPanel movie={this.props.selectedMovie} onReset={this.handleMovieReset} />
+            <InfoSplit genre={this.props.selectedMovie.genres[0]} />
+          </>
         ) : (
-          <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
-        )}
-        {this.props.selectedMovie ? (
-          <InfoSplit genre={this.props.selectedMovie.genres[0]} />
-        ) : (
-          <SearchSplit
-            moviesCount={this.props.movies.length}
-            sortTab={this.props.sortTab}
-            onToggle={this.handleToggleSort}
-          />
+          <>
+            <SearchPanel searchTab={this.props.searchTab} onToggle={this.handleToggleSearch}></SearchPanel>
+            <SearchSplit
+              moviesCount={this.props.movies.length}
+              sortTab={this.props.sortTab}
+              onToggle={this.handleToggleSort}
+            />
+          </>
         )}
         <MovieList movies={sortedMovies} onSelect={this.handleMovieSelect} />
         <Footer />
