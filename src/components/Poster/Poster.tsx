@@ -2,7 +2,7 @@ import React from 'react';
 import './Poster.scss';
 
 const { useRef } = React;
-const altImgSrc = 'assets/grey_x.png';
+const altImgSrc = '/assets/grey_x.png';
 
 type Props = {
   poster: string;
