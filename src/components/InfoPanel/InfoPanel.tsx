@@ -27,7 +27,7 @@ export const InfoPanel: React.FunctionComponent<Props> = (props) => (
           </div>
           <div className="infopanel__tagline">{props.movie.tagline}</div>
           <span className="infopanel__digits">{props.movie.release_date.split('-').shift()}</span>
-          <span className="infopanel__digits">{props.movie.runtime} min</span>
+          {props.movie.runtime ? <span className="infopanel__digits">{props.movie.runtime} min</span> : null}
           <div className="infopanel__overview">{props.movie.overview}</div>
         </div>
       </div>
