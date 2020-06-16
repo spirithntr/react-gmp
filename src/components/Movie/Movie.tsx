@@ -1,6 +1,8 @@
 import React from 'react';
 import './Movie.scss';
 import { Poster } from '../Poster/Poster';
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 
 type Props = {
   id: number;
@@ -11,21 +13,26 @@ type Props = {
   onSelect: any;
 };
 
-export const Movie: React.FunctionComponent<Props> = (props) => {
+type PropsType = RouteComponentProps & Props;
+
+export const Movie: React.FunctionComponent<PropsType> = (props) => {
   const handleClick = (e: React.SyntheticEvent) => {
     props.onSelect(props.id);
+    props.history.push(`/movie/${props.id}`)
   };
 
   return (
-    <div className="movie" onClick={handleClick}>
-      <Poster poster={props.poster} />
-      <div className="info">
-        <div className="info_first-row">
-          <div className="title">{props.title}</div>
-          <div className="year">{props.year}</div>
+      <div className="movie" onClick={handleClick}>
+        <Poster poster={props.poster} />
+        <div className="info">
+          <div className="info_first-row">
+            <div className="title">{props.title}</div>
+            <div className="year">{props.year}</div>
+          </div>
+          <div className="genres">{props.genres.join(', ')}</div>
         </div>
-        <div className="genres">{props.genres.join(', ')}</div>
       </div>
-    </div>
   );
 };
+
+export default withRouter(Movie);
