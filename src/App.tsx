@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import * as Actions from './store/actions/actions';
 import { SearchPage } from './components/SearchPage/SearchPage';
+import { NotFound } from './components/NotFound/NotFound';
 
 type StateProps = {
   movies: Movie[];
@@ -46,13 +47,15 @@ export class App extends React.Component<Props, State> {
     return (
       <Router>
         <Switch>
-          <Route path="/search/:query" component={SearchPage} />
           <Route path="/search/:query?" component={SearchPage} />
           <Route path="/movie/:id" component={InfoPage} />
-          <Redirect from="/" to="/search" />
+          <Redirect exact from="/" to="/search" />
+          <Route component={NotFound} />
         </Switch>
-        <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
-        <Footer />
+        <Route path={["/search/:query?", "/movie/:id"]}>
+          <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
+          <Footer />
+        </Route>
       </Router>
     );
   }
