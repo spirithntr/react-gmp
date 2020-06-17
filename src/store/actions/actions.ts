@@ -48,14 +48,12 @@ export const getMoviesAction = (): ThunkAction<any, State, unknown, Action> => {
 export const switchSearchTabAction = (searchTab: SearchTabs) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({ type: ACTIONS.SWITCH_SEARCH_TAB, payload: searchTab });
-    dispatch(getMoviesAction());
   };
 };
 
 export const switchSortTabAction = (sortTab: SortTabs) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({ type: ACTIONS.SWITCH_SORT_TAB, payload: sortTab });
-    dispatch(getMoviesAction());
   };
 };
 
