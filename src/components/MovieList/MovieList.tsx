@@ -3,8 +3,6 @@ import './MovieList.scss';
 import { Movie } from '../Movie/Movie';
 import { Movie as IMovie } from '../../models/movies';
 
-import { data as moviesMock } from '../../../__mocks__/movies.json';
-
 type Props = {
   onSelect: any;
   movies: IMovie[];

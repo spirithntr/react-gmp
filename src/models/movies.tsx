@@ -31,7 +31,7 @@ export type State = {
   search: string;
 };
 
-export interface MovieResponse {
+export interface MoviesResponse {
   data: Movie[],
   limit: number,
   offset: number,

@@ -1,17 +1,13 @@
 import React from 'react';
 import 'App.scss';
-
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { MovieList } from './components/MovieList/MovieList';
 import { Footer } from './components/Footer/Footer';
-import { SearchPanel } from './components/SearchPanel/SearchPanel';
-import { InfoPanel } from './components/InfoPanel/InfoPanel';
-import { InfoSplit } from './components/InfoSplit/InfoSplit';
-
-import { SearchSplit } from './components/SearchSplit/SearchSplit';
+import { InfoPage } from './components/InfoPage/InfoPage';
 import { Movie, SearchTabs, SortTabs, State } from './models/movies';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import * as Actions from './store/actions/actions';
+import { SearchPage } from './components/SearchPage/SearchPage';
 
 type StateProps = {
   movies: Movie[];
@@ -44,44 +40,20 @@ export class App extends React.Component<Props, State> {
     };
 
     this.handleMovieSelect = this.handleMovieSelect.bind(this);
-    this.handleMovieReset = this.handleMovieReset.bind(this);
-    this.handleToggleSort = this.handleToggleSort.bind(this);
-    this.handleToggleSearch = this.handleToggleSearch.bind(this);
-    this.selectSortingAlgorithm = this.selectSortingAlgorithm.bind(this);
-    this.handleSearchInput = this.handleSearchInput.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.getMovies();
   }
 
   render() {
     return (
-      <ErrorBoundary>
-        {this.props.selectedMovie ? (
-          <>
-            <InfoPanel movie={this.props.selectedMovie} onReset={this.handleMovieReset} />
-            <InfoSplit genre={this.props.selectedMovie.genres[0]} />
-          </>
-        ) : (
-          <>
-            <SearchPanel
-              onKeyPress={this.props.getMovies}
-              onChange={this.handleSearchInput}
-              searchTab={this.props.searchTab}
-              onToggle={this.handleToggleSearch}
-              onClick={this.props.getMovies}
-            ></SearchPanel>
-            <SearchSplit
-              moviesCount={this.props.movies.length}
-              sortTab={this.props.sortTab}
-              onToggle={this.handleToggleSort}
-            />
-          </>
-        )}
+      <Router>
+        <Switch>
+          <Route path="/search/:query" component={SearchPage} />
+          <Route path="/search/:query?" component={SearchPage} />
+          <Route path="/movie/:id" component={InfoPage} />
+          <Redirect from="/" to="/search" />
+        </Switch>
         <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
         <Footer />
-      </ErrorBoundary>
+      </Router>
     );
   }
 
@@ -90,34 +62,6 @@ export class App extends React.Component<Props, State> {
     if (selectedMovie) {
       this.props.selectMovie(selectedMovie);
     }
-  }
-
-  public handleMovieReset() {
-    this.props.resetSelectedMovie();
-  }
-
-  public handleToggleSort(sortTab: SortTabs) {
-    this.props.switchSortTab(sortTab);
-  }
-
-  public handleToggleSearch(searchTab: SearchTabs) {
-    this.props.switchSearchTab(searchTab);
-  }
-
-  public handleSearchInput(input: string) {
-    this.props.changeInput(input);
-  }
-
-  private sortByDate(first: Movie, second: Movie) {
-    return first.release_date < second.release_date ? 1 : -1;
-  }
-
-  private sortByRating(first: Movie, second: Movie) {
-    return first.vote_average < second.vote_average ? 1 : -1;
-  }
-
-  private selectSortingAlgorithm(a: Movie, b: Movie) {
-    return this.state.sortTab === SortTabs.rating ? this.sortByRating(a, b) : this.sortByDate(a, b);
   }
 }
 

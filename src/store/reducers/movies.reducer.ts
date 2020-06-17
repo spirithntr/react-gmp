@@ -22,6 +22,12 @@ export const movies = (state: State = initialState, { type, payload }: any) => {
         movies: payload.movies,
       };
       break;
+    case ACTIONS.GET_MOVIE:
+      state = {
+        ...state,
+        selectedMovie: payload,
+      };
+      break;
     case ACTIONS.SWITCH_SEARCH_TAB:
       state = {
         ...state,
@@ -44,6 +50,7 @@ export const movies = (state: State = initialState, { type, payload }: any) => {
       state = {
         ...state,
         selectedMovie: null,
+        search: ''
       };
       break;
     case ACTIONS.CHANGE_SEARCH_INPUT:

@@ -8,6 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -24,6 +25,7 @@ module.exports = {
   },
   devServer: {
     watchContentBase: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [

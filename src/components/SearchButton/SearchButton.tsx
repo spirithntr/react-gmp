@@ -1,13 +1,18 @@
 import React from 'react';
 import './SearchButton.scss';
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 
-type Props = {
+type BasicProps = {
   onReset(): void;
 }
 
-export const SearchButton = (props: Props) => {
+type Props = RouteComponentProps & BasicProps;
+
+const BasicSearchButton = (props: Props) => {
   const handleClick = (e: React.SyntheticEvent) => {
     props.onReset();
+    props.history.push('/search');
   }
   return (
     <div className="icon-container" onClick={handleClick}>
@@ -15,3 +20,5 @@ export const SearchButton = (props: Props) => {
     </div>
   );
 };
+
+export const SearchButton = withRouter(BasicSearchButton);

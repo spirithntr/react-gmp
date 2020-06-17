@@ -1,10 +1,11 @@
 import { Dispatch } from 'react';
-import { getMovies, SearchTerms } from '../../service/movie.service';
+import { getMovies, SearchTerms, getMovie } from '../../service/movie.service';
 import { ThunkAction } from 'redux-thunk';
 import { State, SortTabs, SearchTabs, Movie } from '../../models/movies';
-import { Action } from 'redux';
+import { Action, ActionCreator } from 'redux';
 
 export enum ACTIONS {
+  GET_MOVIE = 'GET_MOVIE',
   GET_MOVIES = 'GET_MOVIES',
   GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS',
   GET_MOVIES_REJECT = 'GET_MOVIES_REJECT',
@@ -61,7 +62,6 @@ export const switchSortTabAction = (sortTab: SortTabs) => {
 export const selectMovieAction = (movie: Movie) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({ type: ACTIONS.SELECT_MOVIE, payload: movie });
-    dispatch(getMoviesAction());
   };
 };
 
@@ -75,5 +75,18 @@ export const resetSelectedMovieAction = () => {
 export const changeSearchInputAction = (input: string) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({ type: ACTIONS.CHANGE_SEARCH_INPUT, payload: input });
+  };
+};
+
+export const getSingleMovieAction = (id: number) => {
+  return (dispatch: Dispatch<any>) => {
+    getMovie(id).then((movie) => {
+      return dispatch({
+        type: ACTIONS.GET_MOVIE,
+        payload: movie,
+      });
+    }).then(() => {
+      dispatch(getMoviesAction())
+    })
   };
 };

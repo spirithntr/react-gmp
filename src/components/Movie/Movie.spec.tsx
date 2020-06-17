@@ -2,7 +2,7 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 import { jest } from '@jest/globals';
 import { match } from 'react-router';
-import { Movie } from './Movie';
+import { BasicMovie as Movie } from './Movie';
 import { createHistoryProps } from '../../__tests__/history.utils';
 
 

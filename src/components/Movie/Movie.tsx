@@ -4,7 +4,7 @@ import { Poster } from '../Poster/Poster';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
-type Props = {
+type BasicProps = {
   id: number;
   poster: string;
   title: string;
@@ -13,9 +13,9 @@ type Props = {
   onSelect: any;
 };
 
-type PropsType = RouteComponentProps & Props;
+type Props = RouteComponentProps & BasicProps;
 
-export const Movie: React.FunctionComponent<PropsType> = (props) => {
+export const BasicMovie: React.FunctionComponent<Props> = (props) => {
   const handleClick = (e: React.SyntheticEvent) => {
     props.onSelect(props.id);
     props.history.push(`/movie/${props.id}`)
@@ -35,4 +35,4 @@ export const Movie: React.FunctionComponent<PropsType> = (props) => {
   );
 };
 
-export default withRouter(Movie);
+export const Movie = withRouter(BasicMovie);
