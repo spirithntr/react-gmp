@@ -10,6 +10,7 @@ type StateProps = {
   movies: Movie[];
   sortTab: SortTabs;
   searchTab: SearchTabs;
+  search: string;
 };
 
 type DispatchProps = {
@@ -25,25 +26,35 @@ type Props = StateProps & DispatchProps & RouteComponentProps;
 class BasicSearchPage extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-  }
-
-  componentDidMount() {
+    this.searchMovies = this.searchMovies.bind(this);
     const query = (this.props.match.params as any).query;
     if (query) {
       this.props.changeInput(query);
     }
-    this.props.getMovies()
+    this.props.getMovies();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const query = (this.props.match.params as any).query;
+    const prevQuery = (prevProps.match.params as any).query
+    if (query !== prevQuery) {
+      this.props.getMovies();
+    }
+  }
+
+  private searchMovies() {
+    this.props.history.push(`/search/${this.props.search}`)
   }
 
   render() {
     return (
       <>
         <SearchPanel
-          onKeyPress={this.props.getMovies}
+          onKeyPress={this.searchMovies}
           onChange={this.props.changeInput}
           searchTab={this.props.searchTab}
           onToggle={this.props.switchSearchTab}
-          onClick={this.props.getMovies}
+          onClick={this.searchMovies}
         ></SearchPanel>
         <SearchSplit
           moviesCount={this.props.movies.length}
@@ -59,6 +70,7 @@ const mapStateToProps = (state: State): StateProps => ({
   movies: state.movies,
   sortTab: state.sortTab,
   searchTab: state.searchTab,
+  search: state.search,
 });
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => {

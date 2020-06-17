@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 import { getMovies, SearchTerms, getMovie } from '../../service/movie.service';
 import { ThunkAction } from 'redux-thunk';
 import { State, SortTabs, SearchTabs, Movie } from '../../models/movies';
-import { Action, ActionCreator } from 'redux';
+import { Action } from 'redux';
 
 export enum ACTIONS {
   GET_MOVIE = 'GET_MOVIE',
