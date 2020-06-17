@@ -64,6 +64,7 @@ export class App extends React.Component<Props, State> {
     const selectedMovie = this.props.movies.find((movie) => movie.id === id);
     if (selectedMovie) {
       this.props.selectMovie(selectedMovie);
+      window.scrollTo(0, 0);
     }
   }
 }
