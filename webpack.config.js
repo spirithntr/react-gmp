@@ -1,18 +1,22 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
-const config = {
-  mode: 'none',
+module.exports = {
   entry: './index.js',
   output: {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'assets', to: 'assets' }],
     }),
   ],
   resolve: {
@@ -21,6 +25,7 @@ const config = {
   },
   devServer: {
     watchContentBase: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -40,10 +45,4 @@ const config = {
       },
     ],
   },
-};
-
-module.exports = (env, argv) => {
-  config.devtool = env.development ? 'source-map' : false;
-
-  return config;
 };
