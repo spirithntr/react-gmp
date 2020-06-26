@@ -1,7 +1,7 @@
 import { State, Movie, SearchTabs, SortTabs } from '../../models/movies';
 import { ACTIONS } from '../actions/actions';
 
-const initialState: State = {
+export const initialState: State = {
   movies: [] as Movie[],
   searchTab: SearchTabs.title,
   sortTab: SortTabs.release,
