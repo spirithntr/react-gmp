@@ -27,6 +27,9 @@ class BasicSearchPage extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.searchMovies = this.searchMovies.bind(this);
+  }
+
+  componentDidMount() {
     const query = (this.props.match.params as any).query;
     if (query) {
       this.props.changeInput(query);
