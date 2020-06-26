@@ -12,8 +12,6 @@ import { Footer } from '../src/components/Footer/Footer';
 
 const path = require('path');
 
-
-const app_dir = path.join(__dirname, '../public/index.html');
 const public_dir = path.join(__dirname, '../public');
 
 
@@ -22,12 +20,6 @@ Object.assign(global, { fetch: fetchNode });
 const app = express();
 const port = 3000;
 
-const Root = (
-    <App router={StaticRouter} store={store} />
-);
-
-const htmlContent = renderToString(Root);
-console.log(htmlContent)
 
 app.use(express.static(public_dir));
 
@@ -41,7 +33,6 @@ app.get('*', async (req, res) => {
     );
 
     const htmlContent = renderToString(Root);
-    console.log(htmlContent)
     const preloadedState = store.getState();
 
     const html = `
