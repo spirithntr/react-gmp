@@ -1,27 +1,33 @@
 import React from 'react';
-import 'App.scss';
+import './App.scss';
 import { MovieList } from './components/MovieList/MovieList';
 import { Footer } from './components/Footer/Footer';
 import { InfoPage } from './components/InfoPage/InfoPage';
 import { Movie, State } from './models/movies';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect, StaticRouter, BrowserRouter } from 'react-router-dom';
 import * as Actions from './store/actions/actions';
 import { SearchPage } from './components/SearchPage/SearchPage';
 import { NotFound } from './components/NotFound/NotFound';
+import { Store } from 'redux';
 
 type StateProps = {
-  movies: Movie[];
+  movies?: Movie[];
 };
 
 type DispatchProps = {
-  selectMovie: (a: Movie) => void;
+  selectMovie?: (a: Movie) => void;
 };
 
-type Props = StateProps & DispatchProps;
+type BasicProps = {
+  router: any;
+  store: any;
+}
+
+type Props = BasicProps & StateProps & DispatchProps;
 
 export class App extends React.Component<Props, State> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
 
     this.handleMovieSelect = this.handleMovieSelect.bind(this);
@@ -29,18 +35,20 @@ export class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/search/:query?" component={SearchPage} />
-          <Route path="/movie/:id" component={InfoPage} />
-          <Redirect exact from="/" to="/search" />
-          <Route component={NotFound} />
-        </Switch>
-        <Route path={["/search/:query?", "/movie/:id"]}>
-          <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
-          <Footer />
-        </Route>
-      </Router>
+      <Provider store={this.props.store}>
+        <this.props.router>
+          <Switch>
+            <Route path="/search/:query?" component={SearchPage} />
+            <Route path="/movie/:id" component={InfoPage} />
+            <Redirect exact from="/" to="/search" />
+            <Route component={NotFound} />
+          </Switch>
+          <Route path={["/search/:query?", "/movie/:id"]}>
+            <MovieList movies={this.props.movies} onSelect={this.handleMovieSelect} />
+            <Footer />
+          </Route>
+        </this.props.router>
+      </Provider>
     );
   }
 

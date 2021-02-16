@@ -5,6 +5,8 @@ import { SearchSplit } from '../SearchSplit/SearchSplit';
 import { Movie, SortTabs, SearchTabs, State } from '../../models/movies';
 import { connect } from 'react-redux';
 import * as Actions from '../../store/actions/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
 type StateProps = {
   movies: Movie[];
@@ -27,6 +29,9 @@ class BasicSearchPage extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.searchMovies = this.searchMovies.bind(this);
+  }
+
+  componentDidMount() {
     const query = (this.props.match.params as any).query;
     if (query) {
       this.props.changeInput(query);
@@ -57,7 +62,7 @@ class BasicSearchPage extends React.Component<Props> {
           onClick={this.searchMovies}
         ></SearchPanel>
         <SearchSplit
-          moviesCount={this.props.movies.length}
+          moviesCount={this.props?.movies?.length || 0}
           sortTab={this.props.sortTab}
           onToggle={this.props.switchSortTab}
         ></SearchSplit>
@@ -73,7 +78,7 @@ const mapStateToProps = (state: State): StateProps => ({
   search: state.search,
 });
 
-const mapDispatchToProps = (dispatch: any): DispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<State, any, Action>): DispatchProps => {
   return {
     getMovies: () => dispatch(Actions.getMoviesAction()),
     switchSearchTab: (searchTab: SearchTabs) => dispatch(Actions.switchSearchTabAction(searchTab)),

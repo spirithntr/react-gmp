@@ -16,8 +16,8 @@ export enum ACTIONS {
   RESET_SELECTED_MOVIE = 'RESET_SELECTED_MOVIE',
 }
 
-export const getMoviesAction = (): ThunkAction<any, State, unknown, Action> => {
-  return (dispatch: Dispatch<any>, getState) => {
+export const getMoviesAction = (): ThunkAction<Promise<boolean>, State, unknown, Action> => {
+  return (dispatch, getState) => {
     const { searchTab, sortTab, selectedMovie, search } = getState();
     let terms: SearchTerms;
     if (selectedMovie) {
@@ -34,13 +34,14 @@ export const getMoviesAction = (): ThunkAction<any, State, unknown, Action> => {
       };
     }
     dispatch({ type: ACTIONS.GET_MOVIES });
-    getMovies(terms).then(({ data }) => {
-      return dispatch({
+    return getMovies(terms).then(({ data }) => {
+      dispatch({
         type: ACTIONS.GET_MOVIES_SUCCESS,
         payload: {
           movies: data,
         },
       });
+      return true;
     });
   };
 };

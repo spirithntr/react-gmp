@@ -6,7 +6,7 @@
   "scripts": {
     "cypress": "cypress run",
     "test": "jest --watch",
-    "server": "node server",
+    "server": "webpack --config webpack.common.js && node dist/server.js",
     "start": "webpack-dev-server --hot --open --mode=development",
     "build": "webpack --config webpack.config.js --mode=production",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
@@ -35,7 +35,11 @@
     "snapshotResolver": "./snapshotResolver.js"
   },
   "dependencies": {
+    "eslint-loader": "^4.0.2",
     "express": "^4.17.1",
+    "ignore-loader": "^0.1.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -43,17 +47,20 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@types/enzyme": "^3.10.5",
+    "@types/express": "^4.17.6",
     "@types/jest": "^25.2.1",
+    "@types/node-fetch": "^2.5.7",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
-    "@types/react-redux": "^7.1.9",    
+    "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-test-renderer": "^16.9.2",
     "@types/redux-logger": "^3.0.8",
@@ -63,7 +70,6 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.1",
     "css-loader": "^3.5.3",
-    "cypress": "^4.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^7.0.0",
